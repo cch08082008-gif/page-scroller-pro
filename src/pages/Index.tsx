@@ -233,8 +233,8 @@ const Index = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {portfolio.map((p) => (
                 <div key={p.title} className="bg-[#171f33] hover:bg-[#222a3d] transition-all duration-300">
-                  <div className="aspect-video bg-[#222a3d] flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[#adc6ff]/20 text-8xl">{p.icon}</span>
+                  <div className="aspect-video bg-[#222a3d] overflow-hidden">
+                    <img src={p.img} alt={p.title} className="w-full h-full object-cover" />
                   </div>
                   <div className="p-8">
                     <span className="text-xs font-headline font-bold tracking-widest uppercase text-[#adc6ff]">{p.type}</span>
