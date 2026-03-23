@@ -1,6 +1,6 @@
 import { useState, FormEvent } from "react";
-import PolicyModal from "@/components/PolicyModal";
-import logoIcon from "@/assets/byteframe-logo-icon.png";
+import logoIcon from "../assets/byteframe-logo-icon.png";
+import logoWord from "../assets/byteframe-logo-word.png";
 import logoWord from "@/assets/byteframe-logo-word.png";
 import portfolioBooking from "@/assets/portfolio-booking.jpg";
 import portfolioWebsite from "@/assets/portfolio-website.jpg";
