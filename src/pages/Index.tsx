@@ -103,7 +103,7 @@ const Index = () => {
       <nav className="fixed top-0 w-full z-50 bg-[#0b1326]/80 backdrop-blur-md border-b border-[#424754]/20">
         <div className="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
           <button onClick={() => scrollTo("hero")} className="flex items-center gap-2">
-            <img src={byteframeLogo} alt="Byteframe" className="h-10 w-auto" />
+            <img src={logoIcon} alt="Byteframe icon" className="h-9 w-auto" /><img src={logoWord} alt="Byteframe" className="h-5 w-auto" />
           </button>
           <div className="hidden md:flex items-center gap-8 font-headline font-medium tracking-tight">
             <button onClick={() => scrollTo("services")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Services</button>
@@ -378,7 +378,7 @@ const Index = () => {
         <div className="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto gap-6">
           <div>
             <button onClick={() => scrollTo("hero")} className="flex items-center gap-2">
-              <img src={byteframeLogo} alt="Byteframe" className="h-9 w-auto" />
+              <img src={logoIcon} alt="Byteframe icon" className="h-8 w-auto" /><img src={logoWord} alt="Byteframe" className="h-4 w-auto" />
             </button>
             <p className="text-[#dae2fd]/40 text-xs mt-2">Clean websites. Systems that work.</p>
           </div>
