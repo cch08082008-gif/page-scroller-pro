@@ -162,7 +162,7 @@ const Index = () => {
                   <img
                     alt="Dark minimal workspace"
                     className="w-full h-full object-cover grayscale brightness-80 group-hover:scale-105 transition-transform duration-700"
-                    src="@/assets/softwaredevelope"
+                    src="@/assets/softwaredevelope.jpg"
                   />
                 </div>
                 <div className="relative z-20 space-y-4">
