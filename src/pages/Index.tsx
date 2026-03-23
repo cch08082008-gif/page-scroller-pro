@@ -2,6 +2,12 @@ import { useState, FormEvent } from "react";
 import PolicyModal from "@/components/PolicyModal";
 import logoIcon from "@/assets/byteframe-logo-icon.png";
 import logoWord from "@/assets/byteframe-logo-word.png";
+import portfolioBooking from "@/assets/portfolio-booking.jpg";
+import portfolioWebsite from "@/assets/portfolio-website.jpg";
+import portfolioCatalogue from "@/assets/portfolio-catalogue.jpg";
+import portfolioAutomation from "@/assets/portfolio-automation.jpg";
+import portfolioEcommerce from "@/assets/portfolio-ecommerce.jpg";
+import portfolioRegistration from "@/assets/portfolio-registration.jpg";
 
 
 const WEBHOOK_URL = "YOUR_MAKE_WEBHOOK_URL_HERE";
