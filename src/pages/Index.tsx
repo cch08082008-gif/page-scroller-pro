@@ -2,6 +2,12 @@ import { useState, FormEvent } from "react";
 import PolicyModal from "@/components/PolicyModal";
 import logoIcon from "@/assets/byteframe-logo-icon.png";
 import logoWord from "@/assets/byteframe-logo-word.png";
+import portfolioBooking from "@/assets/portfolio-booking.jpg";
+import portfolioWebsite from "@/assets/portfolio-website.jpg";
+import portfolioCatalogue from "@/assets/portfolio-catalogue.jpg";
+import portfolioAutomation from "@/assets/portfolio-automation.jpg";
+import portfolioEcommerce from "@/assets/portfolio-ecommerce.jpg";
+import portfolioRegistration from "@/assets/portfolio-registration.jpg";
 
 
 const WEBHOOK_URL = "YOUR_MAKE_WEBHOOK_URL_HERE";
@@ -67,12 +73,12 @@ const Index = () => {
   ];
 
   const portfolio = [
-    { icon: "event_available", type: "Booking System", title: "Appointment Booking", desc: "Let customers schedule appointments online — no more back-and-forth on WhatsApp or phone calls." },
-    { icon: "language", type: "Brand Website", title: "Business Profile Site", desc: "A clean, professional website that tells people who you are, what you do, and how to reach you." },
-    { icon: "inventory_2", type: "Product Catalogue", title: "Online Product Listing", desc: "Showcase your products online so customers can browse anytime, from anywhere." },
-    { icon: "bolt", type: "Automation System", title: "Business Automation", desc: "Save time by automating repetitive tasks — like sending quotations, collecting leads, or updating records." },
-    { icon: "shopping_cart", type: "E-commerce / Sales Page", title: "Online Sales Page", desc: "Sell your products online with a simple, fast page that turns visitors into buyers." },
-    { icon: "how_to_reg", type: "Event Registration", title: "Sign-up & Registration", desc: "Collect sign-ups for your events, courses, or workshops — all organised in one page." },
+    { img: portfolioBooking, type: "Booking System", title: "Appointment Booking", desc: "Let customers schedule appointments online — no more back-and-forth on WhatsApp or phone calls." },
+    { img: portfolioWebsite, type: "Brand Website", title: "Business Profile Site", desc: "A clean, professional website that tells people who you are, what you do, and how to reach you." },
+    { img: portfolioCatalogue, type: "Product Catalogue", title: "Online Product Listing", desc: "Showcase your products online so customers can browse anytime, from anywhere." },
+    { img: portfolioAutomation, type: "Automation System", title: "Business Automation", desc: "Save time by automating repetitive tasks — like sending quotations, collecting leads, or updating records." },
+    { img: portfolioEcommerce, type: "E-commerce / Sales Page", title: "Online Sales Page", desc: "Sell your products online with a simple, fast page that turns visitors into buyers." },
+    { img: portfolioRegistration, type: "Event Registration", title: "Sign-up & Registration", desc: "Collect sign-ups for your events, courses, or workshops — all organised in one page." },
   ];
 
   const advantages = [
@@ -227,8 +233,8 @@ const Index = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {portfolio.map((p) => (
                 <div key={p.title} className="bg-[#171f33] hover:bg-[#222a3d] transition-all duration-300">
-                  <div className="aspect-video bg-[#222a3d] flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[#adc6ff]/20 text-8xl">{p.icon}</span>
+                  <div className="aspect-video bg-[#222a3d] overflow-hidden">
+                    <img src={p.img} alt={p.title} className="w-full h-full object-cover" />
                   </div>
                   <div className="p-8">
                     <span className="text-xs font-headline font-bold tracking-widest uppercase text-[#adc6ff]">{p.type}</span>
