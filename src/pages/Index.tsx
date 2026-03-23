@@ -159,11 +159,17 @@ const Index = () => {
               <div className="aspect-[4/5] bg-[#131b2e] border border-[#424754]/10 relative overflow-hidden p-6 flex flex-col justify-end">
                 <div className="absolute inset-0 opacity-40 mix-blend-overlay">
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0b1326] via-transparent to-transparent z-10"></div>
-                  <img
-                    alt="Dark minimal workspace"
-                    className="w-full h-full object-cover grayscale brightness-80 group-hover:scale-105 transition-transform duration-700"
-                    src="@/assets/softwaredevelope.jpg"
-                  />
+                  import softwareImg from "@/assets/softwaredevelope.jpg";
+
+export default function YourComponent() {
+  return (
+    <img
+      alt="Dark minimal workspace"
+      className="w-full h-full object-cover grayscale brightness-80 group-hover:scale-105 transition-transform duration-700"
+      src={softwareImg}
+    />
+  );
+}
                 </div>
                 <div className="relative z-20 space-y-4">
                   <div className="h-1 w-12 bg-[#adc6ff]"></div>
