@@ -10,7 +10,7 @@ import portfolioEcommerce from "@/assets/portfolio-ecommerce.jpg";
 import portfolioRegistration from "@/assets/portfolio-registration.jpg";
 
 
-const WEBHOOK_URL = "const WEBHOOK_URL = "https://hook.eu1.make.com/2hu1fihrq4k2kedc28155d8647fsozx2";
+const WEBHOOK_URL = "https://hook.eu1.make.com/2hu1fihrq4k2kedc28155d8647fsozx2";
 
 const Index = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
