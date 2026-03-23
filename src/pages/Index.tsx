@@ -1,7 +1,5 @@
 import { useState, FormEvent } from "react";
-import logoIcon from "../assets/byteframe-logo-icon.png";
-import logoWord from "../assets/byteframe-logo-word.png";
-import logoWord from "@/assets/byteframe-logo-word.png";
+import byteframeLogo from "../assets/byteframe-logo.png";
 import portfolioBooking from "@/assets/portfolio-booking.jpg";
 import portfolioWebsite from "@/assets/portfolio-website.jpg";
 import portfolioCatalogue from "@/assets/portfolio-catalogue.jpg";
