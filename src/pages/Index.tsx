@@ -29,11 +29,13 @@ const Index = () => {
     `Hi Byteframe! I'd like to enquire about your services.%0A%0AName: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0AService: ${encodeURIComponent(service)}%0AWhatsApp: ${encodeURIComponent(whatsapp)}%0AMessage: ${encodeURIComponent(message || "—")}`;
 
   const sendWhatsApp = () => {
-    window.open(\`https://wa.me/${WA_NUMBER}?text=\${buildMessage()}\`, "_blank");
+    const url = "https://wa.me/" + WA_NUMBER + "?text=" + buildMessage();
+    window.open(url, "_blank");
   };
 
   const sendTelegram = () => {
-    window.open(\`https://t.me/${TG_USERNAME}?text=\${buildMessage()}\`, "_blank");
+    const url = "https://t.me/" + TG_USERNAME + "?text=" + buildMessage();
+    window.open(url, "_blank");
   };
 
   const services = [
