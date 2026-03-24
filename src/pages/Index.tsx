@@ -107,7 +107,7 @@ const Index = () => {
           </button>
           <div className="hidden md:flex items-center gap-8 font-headline font-medium tracking-tight">
             <button onClick={() => scrollTo("services")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Services</button>
-            <button onClick={() => scrollTo("portfolio")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Portfolio</button>
+            <button onClick={() => scrollTo("work")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Portfolio</button>
             <button onClick={() => scrollTo("about")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">About</button>
             <button onClick={() => scrollTo("booking")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Booking</button>
           </div>
@@ -223,10 +223,10 @@ const Index = () => {
         </section>
 
         {/* ========== PORTFOLIO ========== */}
-        <section id="portfolio" className="bg-[#131b2e] py-24 px-8">
+        <section id="build" className="bg-[#131b2e] py-24 px-8">
           <div className="max-w-7xl mx-auto">
             <div className="mb-16">
-              <span className="text-[#adc6ff] text-sm font-bold tracking-[0.2em] uppercase mb-4 block">Our Work</span>
+              <span className="text-[#adc6ff] text-sm font-bold tracking-[0.2em] uppercase mb-4 block">What We</span>
               <h2 className="text-5xl md:text-6xl font-headline font-extrabold tracking-tighter text-[#dae2fd]">Portfolio</h2>
               <div className="w-24 h-1 bg-[#adc6ff] mt-8"></div>
             </div>
