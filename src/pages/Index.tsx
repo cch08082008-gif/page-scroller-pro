@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState } from "react";
 import PolicyModal from "@/components/PolicyModal";
 import logoIcon from "@/assets/byteframe-logo-icon.png";
 import logoWord from "@/assets/byteframe-logo-word.png";
@@ -10,48 +10,30 @@ import portfolioAutomation from "@/assets/portfolio-automation.jpg";
 import portfolioEcommerce from "@/assets/portfolio-ecommerce.jpg";
 import portfolioRegistration from "@/assets/portfolio-registration.jpg";
 
-const WEBHOOK_URL = "https://hook.eu1.make.com/2hu1fihrq4k2kedc28155d8647fsozx2";
+const WA_NUMBER = "60129463323";
+const TG_USERNAME = "ChangChunHou";
 
 const Index = () => {
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [formError, setFormError] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
   const [policyModal, setPolicyModal] = useState<"privacy" | "terms" | null>(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [service, setService] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [message, setMessage] = useState("");
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSubmitting(true);
-    setFormError(false);
+  const buildMessage = () =>
+    `Hi Byteframe! I'd like to enquire about your services.%0A%0AName: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0AService: ${encodeURIComponent(service)}%0AWhatsApp: ${encodeURIComponent(whatsapp)}%0AMessage: ${encodeURIComponent(message || "—")}`;
 
-    const form = e.currentTarget;
-    const payload = {
-      name: (form.elements.namedItem("name") as HTMLInputElement).value,
-      email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      service: (form.elements.namedItem("service") as HTMLSelectElement).value,
-      whatsapp: (form.elements.namedItem("whatsapp") as HTMLInputElement).value,
-      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
-    };
+  const sendWhatsApp = () => {
+    window.open(\`https://wa.me/${WA_NUMBER}?text=\${buildMessage()}\`, "_blank");
+  };
 
-    try {
-      const res = await fetch(WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify(payload),
-      });
-      if (res.ok || res.status === 200) {
-        setFormSubmitted(true);
-      } else {
-        throw new Error("Failed");
-      }
-    } catch {
-      setFormError(true);
-    } finally {
-      setSubmitting(false);
-    }
+  const sendTelegram = () => {
+    window.open(\`https://t.me/${TG_USERNAME}?text=\${buildMessage()}\`, "_blank");
   };
 
   const services = [
@@ -75,9 +57,9 @@ const Index = () => {
   const portfolio = [
     { img: portfolioBooking, type: "Booking System", title: "Appointment Booking", desc: "Let customers schedule appointments online — no more back-and-forth on WhatsApp or phone calls." },
     { img: portfolioWebsite, type: "Brand Website", title: "Business Profile Site", desc: "A clean, professional website that tells people who you are, what you do, and how to reach you." },
-    { img: portfolioCatalogue, type: "Product Catalogue", title: "Browse & Enquire — No checkout needed", desc: "Showcase your products online so customers can browse anytime, from anywhere." },
+    { img: portfolioCatalogue, type: "Product Catalogue", title: "Online Product Listing", desc: "Showcase your products online so customers can browse anytime, from anywhere." },
     { img: portfolioAutomation, type: "Automation System", title: "Business Automation", desc: "Save time by automating repetitive tasks — like sending quotations, collecting leads, or updating records." },
-    { img: portfolioEcommerce, type: "E-commerce / Sales Page", title: "Buy Directly Online — Full checkout", desc: "Sell your products online with a simple, fast page that turns visitors into buyers." },
+    { img: portfolioEcommerce, type: "E-commerce / Sales Page", title: "Online Sales Page", desc: "Sell your products online with a simple, fast page that turns visitors into buyers." },
     { img: portfolioRegistration, type: "Event Registration", title: "Sign-up & Registration", desc: "Collect sign-ups for your events, courses, or workshops — all organised in one page." },
   ];
 
@@ -107,7 +89,7 @@ const Index = () => {
           </button>
           <div className="hidden md:flex items-center gap-8 font-headline font-medium tracking-tight">
             <button onClick={() => scrollTo("services")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Services</button>
-            <button onClick={() => scrollTo("work")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Work</button>
+            <button onClick={() => scrollTo("portfolio")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Portfolio</button>
             <button onClick={() => scrollTo("about")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">About</button>
             <button onClick={() => scrollTo("booking")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Booking</button>
           </div>
@@ -161,7 +143,7 @@ const Index = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0b1326] via-transparent to-transparent z-10"></div>
                   <img
                     alt="Dark minimal workspace"
-                    className="w-full h-full object-cover grayscale brightness-80 group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-105 transition-transform duration-700"
                     src={softwareImg}
                   />
                 </div>
@@ -223,11 +205,11 @@ const Index = () => {
         </section>
 
         {/* ========== PORTFOLIO ========== */}
-        <section id="work" className="bg-[#131b2e] py-24 px-8">
+        <section id="portfolio" className="bg-[#131b2e] py-24 px-8">
           <div className="max-w-7xl mx-auto">
             <div className="mb-16">
-              <span className="text-[#adc6ff] text-sm font-bold tracking-[0.2em] uppercase mb-4 block">What We</span>
-              <h2 className="text-5xl md:text-6xl font-headline font-extrabold tracking-tighter text-[#dae2fd]">Build</h2>
+              <span className="text-[#adc6ff] text-sm font-bold tracking-[0.2em] uppercase mb-4 block">Our Work</span>
+              <h2 className="text-5xl md:text-6xl font-headline font-extrabold tracking-tighter text-[#dae2fd]">Portfolio</h2>
               <div className="w-24 h-1 bg-[#adc6ff] mt-8"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -304,34 +286,22 @@ const Index = () => {
             <div className="lg:col-span-7">
               <div className="bg-[#171f33] p-8 md:p-12 relative overflow-hidden">
                 <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#adc6ff]/5 blur-[100px] rounded-full pointer-events-none"></div>
-                {formSubmitted ? (
-                  <div className="relative z-10 flex flex-col items-center justify-center py-16 text-center space-y-6">
-                    <span className="material-symbols-outlined text-[#adc6ff] text-6xl">check_circle</span>
-                    <h3 className="text-2xl font-headline font-bold text-[#dae2fd]">Thanks! I'll get back to you within 24 hours.</h3>
-                    <button
-                      onClick={() => setFormSubmitted(false)}
-                      className="text-[#adc6ff] font-headline font-bold text-sm underline underline-offset-4 hover:brightness-110"
-                    >
-                      Send another inquiry
-                    </button>
-                  </div>
-                ) : (
-                  <form className="space-y-8 relative z-10" onSubmit={handleSubmit}>
+                  <form className="space-y-8 relative z-10">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       <div>
                         <label className="block text-xs font-headline font-bold uppercase tracking-widest text-[#adc6ff] mb-2">Full Name *</label>
-                        <input name="name" required className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" placeholder="Your name" type="text" />
+                        <input name="name" required className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" placeholder="Your name" type="text" value={name} onChange={e => setName(e.target.value)} />
                       </div>
                       <div>
                         <label className="block text-xs font-headline font-bold uppercase tracking-widest text-[#adc6ff] mb-2">Email *</label>
-                        <input name="email" required className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" placeholder="you@example.com" type="email" />
+                        <input name="email" required className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" placeholder="you@example.com" type="email" value={email} onChange={e => setEmail(e.target.value)} />
                       </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       <div>
                         <label className="block text-xs font-headline font-bold uppercase tracking-widest text-[#adc6ff] mb-2">Service Type *</label>
                         <div className="relative">
-                          <select name="service" required className="w-full appearance-none bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300">
+                          <select name="service" required className="w-full appearance-none bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" value={service} onChange={e => setService(e.target.value)}>
                             <option value="">Select a service</option>
                             <option>Booking System</option>
                             <option>Brand Website</option>
@@ -345,28 +315,32 @@ const Index = () => {
                       </div>
                       <div>
                         <label className="block text-xs font-headline font-bold uppercase tracking-widest text-[#adc6ff] mb-2">WhatsApp Number *</label>
-                        <input name="whatsapp" required className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" placeholder="+60 12-345 6789" type="tel" />
+                        <input name="whatsapp" required className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" placeholder="+60 12-345 6789" type="tel" value={whatsapp} onChange={e => setWhatsapp(e.target.value)} />
                       </div>
                     </div>
                     <div>
                       <label className="block text-xs font-headline font-bold uppercase tracking-widest text-[#adc6ff] mb-2">Message</label>
-                      <textarea name="message" className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300 resize-none" placeholder="Tell us about your business and what you need..." rows={4}></textarea>
+                      <textarea name="message" className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300 resize-none" placeholder="Tell us about your business and what you need..." rows={4} value={message} onChange={e => setMessage(e.target.value)}></textarea>
                     </div>
-                    {formError && (
-                      <p className="text-red-400 text-sm">Something went wrong. Please try again.</p>
-                    )}
-                    <div className="pt-4">
+                    <div className="pt-4 flex flex-col sm:flex-row gap-4">
                       <button
-                        type="submit"
-                        disabled={submitting}
-                        className="group relative w-full md:w-auto overflow-hidden bg-[#adc6ff] px-10 py-5 text-[#002e6a] font-headline font-extrabold text-sm tracking-widest uppercase flex items-center justify-center gap-3 active:scale-95 transition-all duration-200 hover:brightness-110 disabled:opacity-60"
+                        type="button"
+                        onClick={sendWhatsApp}
+                        className="flex-1 flex items-center justify-center gap-3 bg-[#25D366] text-white px-8 py-5 font-headline font-extrabold text-sm tracking-widest uppercase active:scale-95 transition-all duration-200 hover:brightness-110"
                       >
-                        <span>{submitting ? "Sending..." : "Book a Call"}</span>
-                        <span className="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Send via WhatsApp
+                      </button>
+                      <button
+                        type="button"
+                        onClick={sendTelegram}
+                        className="flex-1 flex items-center justify-center gap-3 bg-[#229ED9] text-white px-8 py-5 font-headline font-extrabold text-sm tracking-widest uppercase active:scale-95 transition-all duration-200 hover:brightness-110"
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                        Send via Telegram
                       </button>
                     </div>
                   </form>
-                )}
               </div>
             </div>
           </div>
@@ -399,6 +373,17 @@ const Index = () => {
 
       <PolicyModal isOpen={policyModal === "privacy"} onClose={() => setPolicyModal(null)} title="Privacy Policy" />
       <PolicyModal isOpen={policyModal === "terms"} onClose={() => setPolicyModal(null)} title="Terms of Service" />
+
+      {/* Floating WhatsApp Button */}
+      <a
+        href={`https://wa.me/${WA_NUMBER}?text=Hi%20Byteframe!%20I%27d%20like%20to%20enquire%20about%20your%20services.`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] rounded-full shadow-lg hover:brightness-110 active:scale-95 transition-all duration-200"
+        aria-label="Chat on WhatsApp"
+      >
+        <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
     </div>
   );
 };
