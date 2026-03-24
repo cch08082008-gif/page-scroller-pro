@@ -1,14 +1,14 @@
 import { useState, FormEvent } from "react";
-import PolicyModal from "../components/PolicyModal";
-import logoIcon from "../assets/byteframe-logo-icon.png";
-import logoWord from "../assets/byteframe-logo-word.png";
+import PolicyModal from "@/components/PolicyModal";
+import logoIcon from "@/assets/byteframe-logo-icon.png";
+import logoWord from "@/assets/byteframe-logo-word.png";
+import softwareImg from "@/assets/softwaredevelope.jpg";
 import portfolioBooking from "@/assets/portfolio-booking.jpg";
 import portfolioWebsite from "@/assets/portfolio-website.jpg";
 import portfolioCatalogue from "@/assets/portfolio-catalogue.jpg";
 import portfolioAutomation from "@/assets/portfolio-automation.jpg";
 import portfolioEcommerce from "@/assets/portfolio-ecommerce.jpg";
 import portfolioRegistration from "@/assets/portfolio-registration.jpg";
-
 
 const WEBHOOK_URL = "https://hook.eu1.make.com/2hu1fihrq4k2kedc28155d8647fsozx2";
 
@@ -39,7 +39,7 @@ const Index = () => {
     try {
       const res = await fetch(WEBHOOK_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain" },
         body: JSON.stringify(payload),
       });
       if (res.ok || res.status === 200) {
@@ -91,7 +91,6 @@ const Index = () => {
   return (
     <div className="dark bg-[#0b1326] text-[#dae2fd] min-h-screen" style={{ fontFamily: "'Inter', sans-serif" }}>
 
-      {/* Google Fonts */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Inter:wght@300;400;500;600&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
@@ -103,7 +102,8 @@ const Index = () => {
       <nav className="fixed top-0 w-full z-50 bg-[#0b1326]/80 backdrop-blur-md border-b border-[#424754]/20">
         <div className="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
           <button onClick={() => scrollTo("hero")} className="flex items-center gap-2">
-            <img src={logoIcon} alt="Byteframe icon" className="h-9 w-auto" /><img src={logoWord} alt="Byteframe" className="h-5 w-auto" />
+            <img src={logoIcon} alt="Byteframe icon" className="h-9 w-auto" />
+            <img src={logoWord} alt="Byteframe" className="h-5 w-auto" />
           </button>
           <div className="hidden md:flex items-center gap-8 font-headline font-medium tracking-tight">
             <button onClick={() => scrollTo("services")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Services</button>
@@ -159,17 +159,11 @@ const Index = () => {
               <div className="aspect-[4/5] bg-[#131b2e] border border-[#424754]/10 relative overflow-hidden p-6 flex flex-col justify-end">
                 <div className="absolute inset-0 opacity-40 mix-blend-overlay">
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0b1326] via-transparent to-transparent z-10"></div>
-                  import softwareImg from "@/assets/softwaredevelope.jpg";
-
-export default function YourComponent() {
-  return (
-    <img
-      alt="Dark minimal workspace"
-      className="w-full h-full object-cover grayscale brightness-80 group-hover:scale-105 transition-transform duration-700"
-      src={softwareImg}
-    />
-  );
-}
+                  <img
+                    alt="Dark minimal workspace"
+                    className="w-full h-full object-cover grayscale brightness-50 group-hover:scale-105 transition-transform duration-700"
+                    src={softwareImg}
+                  />
                 </div>
                 <div className="relative z-20 space-y-4">
                   <div className="h-1 w-12 bg-[#adc6ff]"></div>
@@ -384,7 +378,8 @@ export default function YourComponent() {
         <div className="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto gap-6">
           <div>
             <button onClick={() => scrollTo("hero")} className="flex items-center gap-2">
-              <img src={logoIcon} alt="Byteframe icon" className="h-8 w-auto" /><img src={logoWord} alt="Byteframe" className="h-4 w-auto" />
+              <img src={logoIcon} alt="Byteframe icon" className="h-8 w-auto" />
+              <img src={logoWord} alt="Byteframe" className="h-4 w-auto" />
             </button>
             <p className="text-[#dae2fd]/40 text-xs mt-2">Clean websites. Systems that work.</p>
           </div>
@@ -402,7 +397,6 @@ export default function YourComponent() {
         </div>
       </footer>
 
-      {/* Policy Modals */}
       <PolicyModal isOpen={policyModal === "privacy"} onClose={() => setPolicyModal(null)} title="Privacy Policy" />
       <PolicyModal isOpen={policyModal === "terms"} onClose={() => setPolicyModal(null)} title="Terms of Service" />
     </div>
