@@ -75,9 +75,9 @@ const Index = () => {
   const portfolio = [
     { img: portfolioBooking, type: "Booking System", title: "Appointment Booking", desc: "Let customers schedule appointments online — no more back-and-forth on WhatsApp or phone calls." },
     { img: portfolioWebsite, type: "Brand Website", title: "Business Profile Site", desc: "A clean, professional website that tells people who you are, what you do, and how to reach you." },
-    { img: portfolioCatalogue, type: "Product Catalogue", title: "Online Product Listing", desc: "Showcase your products online so customers can browse anytime, from anywhere." },
+    { img: portfolioCatalogue, type: "Product Catalogue", title: "Browse & Enquire — No checkout needed", desc: "Showcase your products online so customers can browse anytime, from anywhere." },
     { img: portfolioAutomation, type: "Automation System", title: "Business Automation", desc: "Save time by automating repetitive tasks — like sending quotations, collecting leads, or updating records." },
-    { img: portfolioEcommerce, type: "E-commerce / Sales Page", title: "Online Sales Page", desc: "Sell your products online with a simple, fast page that turns visitors into buyers." },
+    { img: portfolioEcommerce, type: "E-commerce / Sales Page", title: "Buy Directly Online — Full checkout", desc: "Sell your products online with a simple, fast page that turns visitors into buyers." },
     { img: portfolioRegistration, type: "Event Registration", title: "Sign-up & Registration", desc: "Collect sign-ups for your events, courses, or workshops — all organised in one page." },
   ];
 
