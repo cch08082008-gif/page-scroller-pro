@@ -4,7 +4,7 @@ import logoIcon from "@/assets/byteframe-logo-icon.png";
 import logoWord from "@/assets/byteframe-logo-word.png";
 import softwareImg from "@/assets/softwaredevelope.jpg";
 import portfolioBooking from "@/assets/portfolio-booking.png";
-import portfolioWebsite from "@/assets/portfolio-website.jpg";
+import portfolioWebsite from "@/assets/portfolio-website.png";
 import portfolioCatalogue from "@/assets/portfolio-catalogue.jpg";
 import portfolioAutomation from "@/assets/portfolio-automation.jpg";
 import portfolioEcommerce from "@/assets/portfolio-ecommerce.jpg";
