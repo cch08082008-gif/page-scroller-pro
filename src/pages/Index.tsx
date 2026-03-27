@@ -389,5 +389,7 @@ const Index = () => {
     </div>
   );
 };
-
+html {
+  scroll-behavior: smooth;
+}
 export default Index;
