@@ -91,7 +91,7 @@ const Index = () => {
           </button>
           <div className="hidden md:flex items-center gap-8 font-headline font-medium tracking-tight">
             <button onClick={() => scrollTo("services")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Services</button>
-            <button onClick={() => scrollTo("work")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Portfolio</button>
+            <button onClick={() => scrollTo("portfolio")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Work</button>
             <button onClick={() => scrollTo("about")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">About</button>
             <button onClick={() => scrollTo("booking")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">Booking</button>
           </div>
