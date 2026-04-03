@@ -362,8 +362,18 @@ const Index = () => {
                 {t.hero.badge}
               </span>
               <h1 className="font-headline font-extrabold text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.95] text-[#dae2fd]">
-                {t.hero.headline1} <span className="text-[#adc6ff]">{t.hero.headline2}</span>
-              </h1>
+  {lang === 'zh' ? (
+    <>
+      <span className="block">{t.hero.headline1}</span>
+      <span className="block text-[#adc6ff]">{t.hero.headline2}</span>
+    </>
+  ) : (
+    <>
+      {t.hero.headline1}{' '}
+      <span className="text-[#adc6ff]">{t.hero.headline2}</span>
+    </>
+  )}
+</h1>
               <p className="max-w-2xl text-lg md:text-xl text-[#c2c6d6] font-light leading-relaxed">
                 {t.hero.sub}
               </p>
