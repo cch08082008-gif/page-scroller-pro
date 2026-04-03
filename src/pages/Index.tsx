@@ -141,7 +141,7 @@ const translations = {
       headline2: "高效运作的系统。",
       sub: "为想要成长的企业提供网站与系统设计。总部在马来西亚，服务全球客户。",
       bookCall: "预约通话",
-      viewPortfolio: "我们打造",
+      viewPortfolio: "查看展示",
       cardTitle: "每一字节都精准。",
       cardDesc: "为真实业务打造简洁、实用的网站与系统。",
     },
@@ -175,7 +175,7 @@ const translations = {
     },
     portfolio: {
       eyebrow: "我们",
-      heading: "打造",
+      heading: "做什么",
       items: [
         { type: "预约系统", title: "预约安排", desc: "让客户在线安排预约，不再在 WhatsApp 或电话里来回沟通。" },
         { type: "品牌网站", title: "企业简介网站", desc: "干净、专业的网站，让人清楚知道你是谁、你做什么、怎样联系你。" },
