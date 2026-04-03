@@ -537,7 +537,7 @@ const Index = () => {
                       <div>
                         <label className="block text-xs font-headline font-bold uppercase tracking-widest text-[#adc6ff] mb-2">{t.booking.form.serviceLbl}</label>
                         <div className="relative">
-                          <select name="service" required className="w-full appearance-none bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" value={service} onChange={e => setService(e.target.value)}>
+                          <select name="service" required className="w-full appearance-none bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-4 text-[#dae2fd] focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" value={service} onChange={e => setService(e.target.value)}>
                             <option value="">{t.booking.form.servicePh}</option>
                             {t.booking.form.serviceOptions.map((opt) => (
                               <option key={opt}>{opt}</option>
