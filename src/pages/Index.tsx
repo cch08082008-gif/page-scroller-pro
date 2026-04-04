@@ -258,7 +258,7 @@ const Index = () => {
 
   // Track active section for nav highlight
   useEffect(() => {
-    const sections = ["hero", "services", "portfolio", "about", "booking"];
+    const sections = ["hero", "services", "work", "about", "booking"];
     const observers: IntersectionObserver[] = [];
     sections.forEach((id) => {
       const el = document.getElementById(id);
