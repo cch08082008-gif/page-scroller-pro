@@ -256,16 +256,17 @@ const Index = () => {
 
   const t = translations[lang];
 
-  // Track active section for nav highlight
+  // FIX 1: Use rootMargin instead of threshold so tall sections (portfolio)
+  // trigger when they enter the middle 10% of the viewport, not when 35% is visible.
   useEffect(() => {
-    const sections = ["hero", "services", "work", "about", "booking"];
+    const sections = ["hero", "services", "portfolio", "about", "booking"];
     const observers: IntersectionObserver[] = [];
     sections.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
         ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
-        { threshold: 0.35 }
+        { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
       );
       obs.observe(el);
       observers.push(obs);
@@ -273,8 +274,13 @@ const Index = () => {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
+  // FIX 3: Use window.scrollTo so smooth scroll works regardless of CSS injection order.
+  // Subtracts 80px to account for the fixed navbar height.
   const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: "smooth" });
   };
 
   const handleLangSwitch = (newLang: Lang) => {
@@ -426,19 +432,20 @@ const Index = () => {
               <span className="text-[#adc6ff] font-headline font-extrabold tracking-[0.2em] text-xs uppercase bg-[#4d8eff]/10 px-3 py-1 rounded">
                 {t.hero.badge}
               </span>
-              <h1 className="font-headline font-extrabold text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.95] text-[#dae2fd]">
-  {lang === 'zh' ? (
-    <>
-      <span className="block">{t.hero.headline1}</span>
-      <span className="block text-[#adc6ff]">{t.hero.headline2}</span>
-    </>
-  ) : (
-    <>
-      {t.hero.headline1}{' '}
-      <span className="text-[#adc6ff]">{t.hero.headline2}</span>
-    </>
-  )}
-</h1>
+              {/* FIX 2a: ZH gets looser leading (same font size, no shrink), EN keeps original tight style */}
+              <h1 className={`font-headline font-extrabold text-5xl md:text-7xl lg:text-8xl text-[#dae2fd] ${lang === "zh" ? "tracking-normal leading-[1.2]" : "tracking-tighter leading-[0.95]"}`}>
+                {lang === 'zh' ? (
+                  <>
+                    <span className="block">{t.hero.headline1}</span>
+                    <span className="block text-[#adc6ff]">{t.hero.headline2}</span>
+                  </>
+                ) : (
+                  <>
+                    {t.hero.headline1}{' '}
+                    <span className="text-[#adc6ff]">{t.hero.headline2}</span>
+                  </>
+                )}
+              </h1>
               <p className="max-w-2xl text-lg md:text-xl text-[#c2c6d6] font-light leading-relaxed">
                 {t.hero.sub}
               </p>
@@ -550,7 +557,8 @@ const Index = () => {
           <div className="max-w-7xl mx-auto">
             <div className="mb-16">
               <span className="text-[#adc6ff] text-sm font-bold tracking-[0.2em] uppercase mb-4 block">{t.about.eyebrow}</span>
-              <h2 className={`font-headline font-extrabold text-[#dae2fd] max-w-3xl ${lang === "zh" ? "text-4xl md:text-5xl tracking-normal leading-[1.3]" : "text-5xl md:text-6xl tracking-tighter"}`}>
+              {/* FIX 2b: ZH gets looser leading (same font size, no shrink), EN keeps original tight style */}
+              <h2 className={`font-headline font-extrabold text-[#dae2fd] max-w-3xl text-5xl md:text-6xl ${lang === "zh" ? "tracking-normal leading-[1.4]" : "tracking-tighter"}`}>
                 {t.about.heading}
               </h2>
               <div className="w-24 h-1 bg-[#adc6ff] mt-8"></div>
