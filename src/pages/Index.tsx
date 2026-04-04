@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import PolicyModal from "@/components/PolicyModal";
 import logoIcon from "@/assets/byteframe-logo-icon.png";
 import logoWord from "@/assets/byteframe-logo-word.png";
@@ -251,14 +251,38 @@ const Index = () => {
   const [service, setService] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [message, setMessage] = useState("");
+  const [activeSection, setActiveSection] = useState<string>("hero");
+  const [langAnim, setLangAnim] = useState(false);
 
   const t = translations[lang];
+
+  // Track active section for nav highlight
+  useEffect(() => {
+    const sections = ["hero", "services", "portfolio", "about", "booking"];
+    const observers: IntersectionObserver[] = [];
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
+        { threshold: 0.35 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const toggleLang = () => setLang((l) => (l === "en" ? "zh" : "en"));
+  const handleLangSwitch = (newLang: Lang) => {
+    if (newLang === lang) return;
+    setLangAnim(true);
+    setLang(newLang);
+    setTimeout(() => setLangAnim(false), 350);
+  };
 
   const buildMessage = () =>
     `Hi Byteframe! I'd like to enquire about your services.%0A%0AName: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0AService: ${encodeURIComponent(service)}%0AWhatsApp: ${encodeURIComponent(whatsapp)}%0AMessage: ${encodeURIComponent(message || "—")}`;
@@ -291,6 +315,27 @@ const Index = () => {
         .font-headline { font-family: 'Manrope', sans-serif; }
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; font-family: 'Material Symbols Outlined'; }
         html { scroll-behavior: smooth; }
+
+        /* Nav link active underline */
+        .nav-link {
+          position: relative;
+          padding-bottom: 2px;
+          transition: color 0.2s;
+        }
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 1.5px;
+          background: #adc6ff;
+          transition: width 0.25s ease;
+        }
+        .nav-link.nav-active { color: #adc6ff; }
+        .nav-link.nav-active::after { width: 100%; }
+
+        /* Lang toggle */
         .lang-toggle {
           position: relative;
           display: inline-flex;
@@ -303,6 +348,17 @@ const Index = () => {
           font-weight: 700;
           font-size: 12px;
           letter-spacing: 0.08em;
+          transition: border-color 0.2s;
+        }
+        .lang-toggle.lang-switching {
+          animation: lang-pop 0.32s ease;
+          border-color: rgba(173,198,255,0.55);
+        }
+        @keyframes lang-pop {
+          0%   { transform: scale(1); }
+          30%  { transform: scale(0.92); }
+          65%  { transform: scale(1.06); }
+          100% { transform: scale(1); }
         }
         .lang-toggle button {
           padding: 5px 12px;
@@ -317,6 +373,15 @@ const Index = () => {
         .lang-toggle button:hover:not(.active) {
           color: rgba(218,226,253,0.8);
         }
+
+        /* Book a Call press animation */
+        .book-btn {
+          transition: all 0.15s ease;
+        }
+        .book-btn:active {
+          transform: translateY(3px) scale(0.97);
+          filter: brightness(0.95);
+        }
       `}</style>
 
       {/* ========== NAVBAR ========== */}
@@ -327,20 +392,20 @@ const Index = () => {
             <img src={logoWord} alt="Byteframe" className="h-5 w-auto" />
           </button>
           <div className="hidden md:flex items-center gap-8 font-headline font-medium tracking-tight">
-            <button onClick={() => scrollTo("services")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">{t.nav.services}</button>
-            <button onClick={() => scrollTo("portfolio")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">{t.nav.work}</button>
-            <button onClick={() => scrollTo("about")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">{t.nav.about}</button>
-            <button onClick={() => scrollTo("booking")} className="text-[#dae2fd]/70 hover:text-[#adc6ff] transition-colors">{t.nav.booking}</button>
+            <button onClick={() => scrollTo("services")} className={`nav-link ${activeSection === "services" ? "nav-active" : "text-[#dae2fd]/70 hover:text-[#adc6ff]"}`}>{t.nav.services}</button>
+            <button onClick={() => scrollTo("portfolio")} className={`nav-link ${activeSection === "portfolio" ? "nav-active" : "text-[#dae2fd]/70 hover:text-[#adc6ff]"}`}>{t.nav.work}</button>
+            <button onClick={() => scrollTo("about")} className={`nav-link ${activeSection === "about" ? "nav-active" : "text-[#dae2fd]/70 hover:text-[#adc6ff]"}`}>{t.nav.about}</button>
+            <button onClick={() => scrollTo("booking")} className={`nav-link ${activeSection === "booking" ? "nav-active" : "text-[#dae2fd]/70 hover:text-[#adc6ff]"}`}>{t.nav.booking}</button>
           </div>
           <div className="flex items-center gap-3">
             {/* Language Toggle */}
-            <div className="lang-toggle">
-              <button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>EN</button>
-              <button className={lang === "zh" ? "active" : ""} onClick={() => setLang("zh")}>中文</button>
+            <div className={`lang-toggle${langAnim ? " lang-switching" : ""}`}>
+              <button className={lang === "en" ? "active" : ""} onClick={() => handleLangSwitch("en")}>EN</button>
+              <button className={lang === "zh" ? "active" : ""} onClick={() => handleLangSwitch("zh")}>中文</button>
             </div>
             <button
               onClick={() => scrollTo("booking")}
-              className="hidden md:inline-flex bg-[#adc6ff] text-[#002e6a] px-6 py-2 rounded-lg font-headline font-bold text-sm hover:brightness-110 active:scale-95 transition-all"
+              className="book-btn hidden md:inline-flex bg-[#adc6ff] text-[#002e6a] px-6 py-2 rounded-lg font-headline font-bold text-sm hover:brightness-110"
             >
               {t.nav.bookCall}
             </button>
@@ -362,8 +427,18 @@ const Index = () => {
                 {t.hero.badge}
               </span>
               <h1 className="font-headline font-extrabold text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.95] text-[#dae2fd]">
-                {t.hero.headline1} <span className="text-[#adc6ff]">{t.hero.headline2}</span>
-              </h1>
+  {lang === 'zh' ? (
+    <>
+      <span className="block">{t.hero.headline1}</span>
+      <span className="block text-[#adc6ff]">{t.hero.headline2}</span>
+    </>
+  ) : (
+    <>
+      {t.hero.headline1}{' '}
+      <span className="text-[#adc6ff]">{t.hero.headline2}</span>
+    </>
+  )}
+</h1>
               <p className="max-w-2xl text-lg md:text-xl text-[#c2c6d6] font-light leading-relaxed">
                 {t.hero.sub}
               </p>
@@ -475,7 +550,7 @@ const Index = () => {
           <div className="max-w-7xl mx-auto">
             <div className="mb-16">
               <span className="text-[#adc6ff] text-sm font-bold tracking-[0.2em] uppercase mb-4 block">{t.about.eyebrow}</span>
-              <h2 className="text-5xl md:text-6xl font-headline font-extrabold tracking-tighter text-[#dae2fd] max-w-3xl">
+              <h2 className={`font-headline font-extrabold text-[#dae2fd] max-w-3xl ${lang === "zh" ? "text-4xl md:text-5xl tracking-normal leading-[1.3]" : "text-5xl md:text-6xl tracking-tighter"}`}>
                 {t.about.heading}
               </h2>
               <div className="w-24 h-1 bg-[#adc6ff] mt-8"></div>
@@ -526,18 +601,18 @@ const Index = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       <div>
                         <label className="block text-xs font-headline font-bold uppercase tracking-widest text-[#adc6ff] mb-2">{t.booking.form.nameLbl}</label>
-                        <input name="name" required className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" placeholder={t.booking.form.namePh} type="text" value={name} onChange={e => setName(e.target.value)} />
+                        <input name="name" required className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-4 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" placeholder={t.booking.form.namePh} type="text" value={name} onChange={e => setName(e.target.value)} />
                       </div>
                       <div>
                         <label className="block text-xs font-headline font-bold uppercase tracking-widest text-[#adc6ff] mb-2">{t.booking.form.emailLbl}</label>
-                        <input name="email" required className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" placeholder={t.booking.form.emailPh} type="email" value={email} onChange={e => setEmail(e.target.value)} />
+                        <input name="email" required className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-4 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" placeholder={t.booking.form.emailPh} type="email" value={email} onChange={e => setEmail(e.target.value)} />
                       </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       <div>
                         <label className="block text-xs font-headline font-bold uppercase tracking-widest text-[#adc6ff] mb-2">{t.booking.form.serviceLbl}</label>
                         <div className="relative">
-                          <select name="service" required className="w-full appearance-none bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" value={service} onChange={e => setService(e.target.value)}>
+                          <select name="service" required className="w-full appearance-none bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-4 text-[#dae2fd] focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" value={service} onChange={e => setService(e.target.value)}>
                             <option value="">{t.booking.form.servicePh}</option>
                             {t.booking.form.serviceOptions.map((opt) => (
                               <option key={opt}>{opt}</option>
@@ -547,12 +622,12 @@ const Index = () => {
                       </div>
                       <div>
                         <label className="block text-xs font-headline font-bold uppercase tracking-widest text-[#adc6ff] mb-2">{t.booking.form.waLbl}</label>
-                        <input name="whatsapp" required className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" placeholder={t.booking.form.waPh} type="tel" value={whatsapp} onChange={e => setWhatsapp(e.target.value)} />
+                        <input name="whatsapp" required className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-4 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300" placeholder={t.booking.form.waPh} type="tel" value={whatsapp} onChange={e => setWhatsapp(e.target.value)} />
                       </div>
                     </div>
                     <div>
                       <label className="block text-xs font-headline font-bold uppercase tracking-widest text-[#adc6ff] mb-2">{t.booking.form.msgLbl}</label>
-                      <textarea name="message" className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-0 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300 resize-none" placeholder={t.booking.form.msgPh} rows={4} value={message} onChange={e => setMessage(e.target.value)}></textarea>
+                      <textarea name="message" className="w-full bg-[#131b2e] border-0 border-b-2 border-[#424754]/30 py-4 px-5 text-[#dae2fd] placeholder:text-[#c2c6d6]/30 focus:ring-0 focus:border-[#adc6ff] focus:outline-none transition-all duration-300 resize-none" placeholder={t.booking.form.msgPh} rows={4} value={message} onChange={e => setMessage(e.target.value)}></textarea>
                     </div>
                     <div className="pt-4 flex flex-col sm:flex-row gap-4">
                       <button
