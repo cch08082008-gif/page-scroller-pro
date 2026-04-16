@@ -31,7 +31,7 @@ const translations = {
       headline2: "Systems That Work.",
       sub: "Web and system design for businesses that want to grow. Based in Malaysia, serving clients worldwide.",
       bookCall: "Book a Call",
-      viewPortfolio: "View Portfolio",
+      viewPortfolio: "View Work",
       cardTitle: "Precision in Every Byte.",
       cardDesc: "Clean, functional websites and systems built for real businesses.",
     },
