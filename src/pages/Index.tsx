@@ -255,8 +255,6 @@ const Index = () => {
 
   const t = translations[lang];
 
-  // FIX 1: Use rootMargin instead of threshold so tall sections (portfolio)
-  // trigger when they enter the middle 10% of the viewport, not when 35% is visible.
   useEffect(() => {
     const sections = ["hero", "services", "portfolio", "about", "booking"];
     const observers: IntersectionObserver[] = [];
@@ -273,8 +271,6 @@ const Index = () => {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  // FIX 3: Use window.scrollTo so smooth scroll works regardless of CSS injection order.
-  // Subtracts 80px to account for the fixed navbar height.
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -309,6 +305,16 @@ const Index = () => {
     portfolioAutomation,
     portfolioEcommerce,
     portfolioRegistration,
+  ];
+
+  // Portfolio links — null means no link (card is not clickable)
+  const portfolioUrls: (string | null)[] = [
+    "https://dentist-xi-murex.vercel.app/",
+    "https://rafee-seven.vercel.app/",
+    "https://portfolio-catalogue.vercel.app/",
+    null,
+    "https://deco-demo1.vercel.app/",
+    "https://portfolio-registration.vercel.app/",
   ];
 
   return (
@@ -387,6 +393,18 @@ const Index = () => {
           transform: translateY(3px) scale(0.97);
           filter: brightness(0.95);
         }
+
+        /* Portfolio card link hover */
+        .portfolio-card-link {
+          display: block;
+          transition: background 0.3s;
+        }
+        .portfolio-card-link:hover .portfolio-img {
+          transform: scale(1.05);
+        }
+        .portfolio-img {
+          transition: transform 0.5s ease;
+        }
       `}</style>
 
       {/* ========== NAVBAR ========== */}
@@ -431,7 +449,6 @@ const Index = () => {
               <span className="text-[#adc6ff] font-headline font-extrabold tracking-[0.2em] text-xs uppercase bg-[#4d8eff]/10 px-3 py-1 rounded">
                 {t.hero.badge}
               </span>
-              {/* FIX 2a: ZH gets looser leading (same font size, no shrink), EN keeps original tight style */}
               <h1 className={`font-headline font-extrabold text-5xl md:text-7xl lg:text-8xl text-[#dae2fd] ${lang === "zh" ? "tracking-normal leading-[1.2]" : "tracking-tighter leading-[0.95]"}`}>
                 {lang === 'zh' ? (
                   <>
@@ -535,18 +552,48 @@ const Index = () => {
               <div className="w-24 h-1 bg-[#adc6ff] mt-8"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {t.portfolio.items.map((p, i) => (
-                <div key={p.title} className="bg-[#171f33] hover:bg-[#222a3d] transition-all duration-300">
-                  <div className="aspect-video bg-[#222a3d] overflow-hidden">
-                    <img src={portfolioImgs[i]} alt={p.title} className="w-full h-full object-cover" />
+              {t.portfolio.items.map((p, i) => {
+                const url = portfolioUrls[i];
+                const cardContent = (
+                  <>
+                    <div className="aspect-video bg-[#222a3d] overflow-hidden">
+                      <img
+                        src={portfolioImgs[i]}
+                        alt={p.title}
+                        className="portfolio-img w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-8 flex justify-between items-start gap-4">
+                      <div>
+                        <span className="text-xs font-headline font-bold tracking-widest uppercase text-[#adc6ff]">{p.type}</span>
+                        <h3 className="text-xl font-headline font-bold text-[#dae2fd] mt-2 mb-3">{p.title}</h3>
+                        <p className="text-[#c2c6d6] text-sm leading-relaxed">{p.desc}</p>
+                      </div>
+                      {url && (
+                        <span className="material-symbols-outlined text-[#adc6ff] opacity-40 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 shrink-0 mt-1">
+                          open_in_new
+                        </span>
+                      )}
+                    </div>
+                  </>
+                );
+
+                return url ? (
+                  <a
+                    key={p.title}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="portfolio-card-link group bg-[#171f33] hover:bg-[#222a3d]"
+                  >
+                    {cardContent}
+                  </a>
+                ) : (
+                  <div key={p.title} className="bg-[#171f33]">
+                    {cardContent}
                   </div>
-                  <div className="p-8">
-                    <span className="text-xs font-headline font-bold tracking-widest uppercase text-[#adc6ff]">{p.type}</span>
-                    <h3 className="text-xl font-headline font-bold text-[#dae2fd] mt-2 mb-3">{p.title}</h3>
-                    <p className="text-[#c2c6d6] text-sm leading-relaxed">{p.desc}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
@@ -556,7 +603,6 @@ const Index = () => {
           <div className="max-w-7xl mx-auto">
             <div className="mb-16">
               <span className="text-[#adc6ff] text-sm font-bold tracking-[0.2em] uppercase mb-4 block">{t.about.eyebrow}</span>
-              {/* FIX 2b: ZH gets looser leading (same font size, no shrink), EN keeps original tight style */}
               <h2 className={`font-headline font-extrabold text-[#dae2fd] max-w-3xl text-5xl md:text-6xl ${lang === "zh" ? "tracking-normal leading-[1.4]" : "tracking-tighter"}`}>
                 {t.about.heading}
               </h2>
