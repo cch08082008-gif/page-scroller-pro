@@ -3,13 +3,12 @@ import PolicyModal from "@/components/PolicyModal";
 import logoIcon from "@/assets/byteframe-logo-icon.png";
 import logoWord from "@/assets/byteframe-logo-word.png";
 import softwareImg from "@/assets/softwaredevelope.jpg";
-import portfolioBooking from "@/assets/portfolio-booking.jpg";
-import portfolioWebsite from "@/assets/portfolio-website.jpg";
-import portfolioCatalogue from "@/assets/portfolio-catalogue.jpg";
+import portfolioBooking from "@/assets/portfolio-booking.png";
+import portfolioWebsite from "@/assets/portfolio-website.png";
+import portfolioCatalogue from "@/assets/portfolio-catalogue.png";
 import portfolioAutomation from "@/assets/portfolio-automation.jpg";
-import portfolioEcommerce from "@/assets/portfolio-ecommerce.jpg";
-import portfolioRegistration from "@/assets/portfolio-registration.jpg";
-
+import portfolioEcommerce from "@/assets/portfolio-ecommerce.png";
+import portfolioRegistration from "@/assets/portfolio-registration.png";
 const WA_NUMBER = "60129463323";
 const TG_USERNAME = "ChangChunHou";
 
