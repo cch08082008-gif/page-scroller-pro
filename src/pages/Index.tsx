@@ -9,7 +9,7 @@ import portfolioCatalogue from "@/assets/portfolio-catalogue.png";
 import portfolioAutomation from "@/assets/portfolio-automation.jpg";
 import portfolioEcommerce from "@/assets/portfolio-ecommerce.png";
 import portfolioRegistration from "@/assets/portfolio-registration.png";
-// import portfolioCustomisation from "@/assets/portfolio-customisation.png"; // ← 放好图片后取消注释
+import portfolioCustomisation from "@/assets/portfolio-customisation.png"; 
 const WA_NUMBER = "60129463323";
 const TG_USERNAME = "ChangChunHou";
 
