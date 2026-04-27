@@ -319,7 +319,7 @@ const Index = () => {
     "https://rafee-seven.vercel.app/",
     "https://portfolio-catalogue.vercel.app/",
     null,
-    "https://sales-page.vercel.app/",
+    "https://sales-pagedemo.vercel.app/",
     "https://portfolio-registration.vercel.app/",
     "https://jersey-customise.vercel.app/",
   ];
