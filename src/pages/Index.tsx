@@ -310,7 +310,7 @@ const Index = () => {
     portfolioAutomation,
     portfolioEcommerce,
     portfolioRegistration,
-    null, // ← 替换成 portfolioCustomisation（图片放好后取消上方 import 注释）
+    portfolioCustomisation
   ];
 
   // Portfolio links — null means no link (card is not clickable)
@@ -319,7 +319,7 @@ const Index = () => {
     "https://rafee-seven.vercel.app/",
     "https://portfolio-catalogue.vercel.app/",
     null,
-    "https://tdf-demo2.vercel.app/",
+    "https://sales-page.vercel.app/",
     "https://portfolio-registration.vercel.app/",
     "https://jersey-customise.vercel.app/",
   ];
