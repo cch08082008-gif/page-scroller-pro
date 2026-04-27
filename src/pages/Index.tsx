@@ -9,6 +9,7 @@ import portfolioCatalogue from "@/assets/portfolio-catalogue.png";
 import portfolioAutomation from "@/assets/portfolio-automation.jpg";
 import portfolioEcommerce from "@/assets/portfolio-ecommerce.png";
 import portfolioRegistration from "@/assets/portfolio-registration.png";
+// import portfolioCustomisation from "@/assets/portfolio-customisation.png"; // ← 放好图片后取消注释
 const WA_NUMBER = "60129463323";
 const TG_USERNAME = "ChangChunHou";
 
@@ -72,6 +73,7 @@ const translations = {
         { type: "Automation System", title: "Business Automation", desc: "Save time by automating repetitive tasks — like sending quotations, collecting leads, or updating records." },
         { type: "E-commerce / Sales Page", title: "Online Sales Page", desc: "Sell your products online with a simple, fast page that turns visitors into buyers." },
         { type: "Event Registration", title: "Sign-up & Registration", desc: "Collect sign-ups for your events, courses, or workshops — all organised in one page." },
+        { type: "Customisation System", title: "Jersey Customisation", desc: "Design and order custom jerseys online — pick colours, add names, numbers, and logos all in one place." },
       ],
     },
     about: {
@@ -107,6 +109,7 @@ const translations = {
           "Automation System",
           "E-commerce / Sales Page",
           "Event Registration",
+          "Customisation System",
           "Other",
         ],
         waLbl: "WhatsApp Number *",
@@ -182,6 +185,7 @@ const translations = {
         { type: "自动化系统", title: "业务自动化", desc: "通过自动化重复工作来节省时间，例如发送报价、收集潜在客户、更新记录。" },
         { type: "电商／销售页面", title: "线上销售页面", desc: "用一个简单快速的页面在线销售产品，把访客转成买家。" },
         { type: "活动报名", title: "报名与注册", desc: "收集活动、课程或工作坊的报名资料，全部集中在一个页面。" },
+        { type: "定制系统", title: "球衣定制系统", desc: "在线设计并订购定制球衣——选择颜色、添加名字、号码和徽标，一站式完成。" },
       ],
     },
     about: {
@@ -217,6 +221,7 @@ const translations = {
           "自动化系统",
           "电商／销售页面",
           "活动报名",
+          "定制系统",
           "其他",
         ],
         waLbl: "WhatsApp 号码 *",
@@ -298,13 +303,14 @@ const Index = () => {
     window.open(url, "_blank");
   };
 
-  const portfolioImgs = [
+  const portfolioImgs: (string | null)[] = [
     portfolioBooking,
     portfolioWebsite,
     portfolioCatalogue,
     portfolioAutomation,
     portfolioEcommerce,
     portfolioRegistration,
+    null, // ← 替换成 portfolioCustomisation（图片放好后取消上方 import 注释）
   ];
 
   // Portfolio links — null means no link (card is not clickable)
@@ -315,6 +321,7 @@ const Index = () => {
     null,
     "https://tdf-demo2.vercel.app/",
     "https://portfolio-registration.vercel.app/",
+    "https://jersey-customise.vercel.app/",
   ];
 
   return (
@@ -557,11 +564,17 @@ const Index = () => {
                 const cardContent = (
                   <>
                     <div className="aspect-video bg-[#222a3d] overflow-hidden">
-                      <img
-                        src={portfolioImgs[i]}
-                        alt={p.title}
-                        className="portfolio-img w-full h-full object-cover"
-                      />
+                      {portfolioImgs[i] ? (
+                        <img
+                          src={portfolioImgs[i]!}
+                          alt={p.title}
+                          className="portfolio-img w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-[#424754]/40">
+                          <span className="material-symbols-outlined text-5xl">image</span>
+                        </div>
+                      )}
                     </div>
                     <div className="p-8 flex justify-between items-start gap-4">
                       <div>
